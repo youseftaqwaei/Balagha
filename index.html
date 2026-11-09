@@ -63,8 +63,8 @@ p.l{font-size:clamp(1.05rem,2vw,1.5rem);line-height:1.9;margin:.5em 0;max-width:
 #ft{position:fixed;bottom:70px;inset-inline-start:2vw;font-size:.85rem;opacity:.6}
 :focus-visible{outline:3px solid var(--coral)}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
-.big span{display:inline-block;animation:drop .7s backwards}
-@keyframes drop{from{opacity:0;transform:translateY(-40px) rotate(-6deg)}}
+.big{display:inline-block;animation:drop .8s backwards,rev 1.4s steps(7) backwards}
+@keyframes rev{from{clip-path:inset(-20% 0 -20% 100%)}to{clip-path:inset( -20% 0 -20% 0)}}
 </style>
 </head>
 <body>
@@ -108,7 +108,7 @@ const D=document.getElementById('deck');let cur=0;
 const Q=[['«عليٌّ أسدٌ» نوع التشبيه فيه:',['تام','ناقص','بليغ','ضمني'],2],['«إذا المنية أنشبت أظفارها» استعارة:',['مكنية','تصريحية','تمثيلية','كناية'],0],['«فلان كثير الرماد» كناية عن:',['موصوف','صفة (الكرم)','نسبة','استعارة'],1],['﴿فليضحكوا قليلًا وليبكوا كثيرًا﴾ فيه:',['جناس','سجع','مقابلة','تشبيه بليغ'],2],['«ويوم تقوم الساعة… ما لبثوا غير ساعة»:',['جناس تام','جناس ناقص','طباق','سجع'],0]];
 function build(s,i){
  const e=document.createElement('section');e.className='sl';let h='';
- if(s.k=='title')h=`<div class="c ctr"><h1 class="big">${[...'البلاغة'].map((c,j)=>`<span style="animation-delay:${j*.12}s">${c}</span>`).join('')}</h1><p class="l" style="font-size:clamp(1.4rem,3vw,2.2rem)">علما البيان والبديع · الصف الثاني عشر</p><div class="who">عمل الطالب: <b>يوسف عماد تقوائي</b><br>الصف: <b>١٢ع٥</b></div><p class="note">استخدم الأسهم ⟵ ⟶ للتنقل</p></div>`;
+ if(s.k=='title')h=`<div class="c ctr"><h1 class="big">البلاغة</h1><p class="l" style="font-size:clamp(1.4rem,3vw,2.2rem)">علما البيان والبديع · الصف الثاني عشر</p><div class="who">عمل الطالب: <b>يوسف عماد تقوائي</b><br>الصف: <b>١٢ع٥</b></div><p class="note">استخدم الأسهم ⟵ ⟶ للتنقل</p></div>`;
  if(s.k=='cards')h=`<div class="c"><h2>${s.t}</h2><p class="l">${s.p}</p><div class="grid">${s.c.map(c=>`<div class="card" tabindex=0><h3>${c[0]}</h3><div>${c[1]}</div></div>`).join('')}</div><p class="note">${s.n}</p></div>`;
  if(s.k=='map')h=`<div class="c"><h2>خريطة الدرس</h2><p class="l">البلاغة ثلاثة علوم: المعاني والبيان والبديع. موضوعنا اليوم: البيان والبديع. اضغط على أي موضوع للانتقال إليه.</p><div class="map"><div><h3>علم البيان</h3>${[['التشبيه',5],['الاستعارة',7],['الكناية',8]].map(a=>`<span class="pill" data-go="${a[1]}">${a[0]}</span>`).join('')}</div><div><h3>علم البديع</h3>${[['السجع',9],['الجناس',9],['الطباق',10],['المقابلة',10]].map(a=>`<span class="pill" data-go="${a[1]}">${a[0]}</span>`).join('')}</div></div></div>`;
  if(s.k=='arkan')h=`<div class="c"><h2>التشبيه وأركانه</h2><p class="l">التشبيه: بيان اشتراك شيء مع غيره في صفة أو أكثر.</p><p class="l">وله أركان لا يكون تامًا إلا بها. ووجه الشبه يجب أن يكون صفة، وهذه الصفة تصف المشبه به أكثر من المشبه.</p><div class="pane"><div class="ex">${M('[0:عليٌّ] [2:كَ][1:الأسدِ] في [3:الشجاعةِ]')}</div><div class="chips">${['المشبه','المشبه به','أداة التشبيه','وجه الشبه'].map((c,j)=>`<span class="chip" data-k="${j}">${c}</span>`).join('')}</div><p class="note" style="color:var(--dk)">المشبه والمشبه به يسمّيان طرفي التشبيه. اضغط على الركن لتراه في المثال.</p></div></div>`;
