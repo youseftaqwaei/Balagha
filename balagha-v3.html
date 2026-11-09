@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>البلاغة: البيان والبديع - الصف الثاني عشر</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0e3b43;--bg2:#17606b;--gold:#f4c25b;--coral:#ff8a73;--ink:#e9f5f3;--card:#eaf7f4;--dk:#0b2f36;--mint:#7fd6c2}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--ink);font-family:Cairo,Tahoma,sans-serif}
+body{background:radial-gradient(circle at 15% 10%,var(--bg2),var(--bg) 60%)}
+#deck{position:fixed;inset:0 0 64px 0}
+.sl{position:absolute;inset:0;padding:4vh 6vw 3vh;overflow-y:auto;opacity:0;pointer-events:none;transform:translateX(-60px);transition:.45s}
+.sl.on{opacity:1;pointer-events:auto;transform:none}
+.sl.past{transform:translateX(60px)}
+h1{font:700 clamp(3rem,9vw,7rem)/1.1 Amiri,serif;color:var(--gold)}
+h2{font:800 clamp(1.6rem,3.6vw,2.6rem);color:var(--gold);margin-bottom:.6em;border-bottom:3px solid var(--coral);display:inline-block;padding-bottom:.15em}
+p.l{font-size:clamp(1.05rem,2vw,1.5rem);line-height:1.9;margin:.5em 0;max-width:62rem}
+.c{display:flex;flex-direction:column;justify-content:center;min-height:100%}
+.ctr{align-items:center;text-align:center}
+.who{margin-top:2.2em;font-size:clamp(1rem,2vw,1.4rem);background:rgba(255,255,255,.1);border:1px solid var(--gold);border-radius:14px;padding:.8em 1.6em;line-height:1.9}
+.who b{color:var(--gold)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;margin-top:1em}
+.card{background:var(--card);color:var(--dk);border-radius:18px;padding:1.2em 1.3em;cursor:pointer;border:3px solid transparent;transition:.25s;font-size:1.1rem;line-height:1.8}
+.card:hover{transform:translateY(-6px);border-color:var(--gold)}
+.card h3{font-size:1.5rem;color:#0a6b78;margin-bottom:.3em}
+.card .hid{max-height:0;overflow:hidden;transition:.4s;opacity:0}
+.card.open .hid{max-height:300px;opacity:1;margin-top:.6em}
+.card.dim{background:#c9d9d7;opacity:.75}
+.map{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+@media(max-width:700px){.map{grid-template-columns:1fr}}
+.map>div{background:rgba(255,255,255,.08);border-radius:20px;padding:1em 1.3em}
+.map h3{color:var(--gold);font-size:1.6rem;margin-bottom:.4em}
+.pill{display:inline-block;margin:.25em;padding:.4em 1.1em;border-radius:99px;background:var(--mint);color:var(--dk);font-weight:600;cursor:pointer;font-size:1.1rem;transition:.2s}
+.pill:hover{background:var(--gold);transform:scale(1.07)}
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin:.4em 0 1em}
+.tab{font:600 1.15rem Cairo,sans-serif;padding:.5em 1.4em;border-radius:12px;border:2px solid var(--mint);background:transparent;color:var(--ink);cursor:pointer;transition:.2s}
+.tab.on{background:var(--gold);color:var(--dk);border-color:var(--gold)}
+.pane{background:var(--card);color:var(--dk);border-radius:20px;padding:1.2em 1.5em;animation:pop .35s}
+@keyframes pop{from{opacity:0;transform:translateY(14px)}}
+.pane .d{font-size:clamp(1.05rem,1.9vw,1.35rem);line-height:1.9}
+.ex{font:700 clamp(1.5rem,3.2vw,2.4rem)/1.8 Amiri,serif;margin:.4em 0;color:#08515c;padding:.3em .8em;border-right:6px solid var(--coral);background:#fff;border-radius:10px}
+.ex b{font-weight:700;border-radius:8px;padding:0 .15em;transition:.25s}
+.ex b.hl{background:var(--gold);color:var(--dk);box-shadow:0 0 0 3px var(--coral)}
+.chips{display:flex;gap:9px;flex-wrap:wrap;margin:.5em 0}
+.chip{cursor:pointer;padding:.35em 1em;border-radius:10px;background:#cdeae4;font-weight:600;font-size:1.05rem;transition:.2s;border:2px solid transparent}
+.chip.hl,.chip:hover{background:var(--gold);border-color:var(--coral)}
+.q{margin-top:.8em;background:var(--dk);color:var(--ink);border-radius:14px;padding:.8em 1.2em;font-size:clamp(1.05rem,1.9vw,1.3rem);line-height:1.9}
+.q i{font-style:normal;color:var(--gold);font-weight:800}
+.q u{text-decoration:none;color:var(--coral);font-weight:700}
+.note{margin-top:.8em;font-size:1rem;opacity:.85}
+.opt{display:block;width:100%;text-align:right;margin:8px 0;padding:.7em 1.1em;font:600 1.15rem Cairo,sans-serif;border-radius:12px;border:2px solid var(--mint);background:rgba(255,255,255,.07);color:var(--ink);cursor:pointer;transition:.2s}
+.opt:hover{background:rgba(255,255,255,.18)}
+.opt.ok{background:#2e9e6b;border-color:#2e9e6b}.opt.no{background:#c24b4b;border-color:#c24b4b}
+.nb{margin-top:1em;padding:.6em 1.6em;border:0;border-radius:12px;background:var(--gold);color:var(--dk);font:800 1.1rem Cairo,sans-serif;cursor:pointer}
+#bar{position:fixed;bottom:0;inset-inline:0;height:64px;display:flex;align-items:center;gap:12px;padding:0 4vw;background:rgba(0,0,0,.35);backdrop-filter:blur(6px)}
+#bar button{width:44px;height:44px;border-radius:50%;border:2px solid var(--gold);background:transparent;color:var(--gold);font-size:1.3rem;cursor:pointer}
+#bar button:hover{background:var(--gold);color:var(--dk)}
+#prog{flex:1;height:8px;background:rgba(255,255,255,.18);border-radius:9px;overflow:hidden}
+#prog i{display:block;height:100%;background:linear-gradient(270deg,var(--gold),var(--coral));transition:.4s;width:0}
+#cnt{font-weight:600;min-width:4.5em;text-align:center}
+#ft{position:fixed;bottom:70px;inset-inline-start:2vw;font-size:.85rem;opacity:.6}
+:focus-visible{outline:3px solid var(--coral)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.big{display:inline-block;animation:drop .4s backwards,rev .7s steps(7) backwards}
+@keyframes rev{from{clip-path:inset(-20% 0 -20% 100%)}to{clip-path:inset(-20% 0 -20% 0)}}
+@keyframes drop{from{opacity:0;transform:translateY(-40px) rotate(-6deg)}}
+</style>
+</head>
+<body>
+<div id="deck"></div>
+<div id="ft">عمل الطالب: يوسف عماد تقوائي | الصف: ١٢ع٥</div>
+<div id="bar"><button id="nx" aria-label="التالي">❯</button><div id="prog"><i></i></div><span id="cnt"></span><button id="pv" aria-label="السابق">❮</button><button id="fs" aria-label="ملء الشاشة">⛶</button></div>
+<script>
+const M=(s)=>s.replace(/\[(\d):([^\]]+)\]/g,'<b data-k="$1">$2</b>');
+const S=[
+{k:'title'},
+{k:'cards',t:'مقدمة: علم البلاغة',p:'اللغة العربية لغة فصيحة غنية بأساليبها وتراكيبها، وعلم البلاغة يكشف أسرار جمالها ووجوه حسن التعبير فيها، وطرائق التأثير في النفوس وإيصال المعاني بأبلغ عبارة.',c:[['علم المعاني','يبحث في مطابقة الكلام لمقتضى الحال (كالتقديم والتأخير والخبر والإنشاء).',1],['علم البيان','التشبيه والاستعارة والكناية. وهو مقرر عليكم ✔',0],['علم البديع','الجناس والسجع والطباق والمقابلة. وهو مقرر عليكم ✔',0]],n:'اضغط على البطاقة لتعرف المزيد'},
+{k:'map'},
+{k:'cards',t:'كيف يأتي السؤال في الاختبار؟',p:'يأتي السؤال في الاختبار على صورتين:',c:[['أثر المحسنات البديعية','يُسأل عن أثر السجع أو الجناس أو الطباق أو المقابلة في المعنى.',0],['الصور الفنية','والصور الفنية هي تشبيهات (وما يماثل التشبيه كالاستعارة والكناية)، ويُسأل عن نوعها وأثرها.',0]],n:'اضغط على البطاقة'},
+{k:'arkan'},
+{k:'tabs',t:'أنواع التشبيه (١): التام والناقص والبليغ',tabs:[
+{n:'تشبيه تام',d:'هو ما اجتمعت فيه الأركان كلها.',ex:'[0:عليٌّ] [2:كَ][1:الأسدِ] في [3:الشجاعةِ]',p:['المشبه: علي','المشبه به: الأسد','الأداة: الكاف','وجه الشبه: الشجاعة'],q:'تشبّه ( المشبه ) بـ( المشبه به ) في ( وجه الشبه ) فتوضّح المعنى وتقرّبه إلى الذهن بصورة كاملة الأركان.'},
+{n:'تشبيه ناقص',d:'ما حُذف منه أداة التشبيه أو وجه الشبه.',ex:'[0:عليٌّ] [1:أسدٌ] في [3:الشجاعةِ] &nbsp;(حُذفت الأداة)<br>[0:عليٌّ] [2:كَ][1:الأسدِ] &nbsp;(حُذف وجه الشبه)',p:['المشبه','المشبه به','الأداة','وجه الشبه'],q:'تشبّه ( المشبه ) بـ( المشبه به ) فتوضّح المعنى وتقرّبه إلى الذهن في إيجاز.'},
+{n:'تشبيه بليغ',d:'ما حُذف منه أداة التشبيه ووجه الشبه، فيتكوّن من ركنين اثنين هما طرفا التشبيه.',ex:'[0:عليٌّ] [1:أسدٌ]',p:['المشبه: علي','المشبه به: أسد'],q:'تجعل ( المشبه ) و( المشبه به ) شيئًا واحدًا فتبالغ في ( المعنى ) وتؤكده في إيجاز.'}]},
+{k:'tabs',t:'أنواع التشبيه (٢): التمثيلي والضمني',tabs:[
+{n:'تمثيلي (بأداة)',d:'تشبيه صورة شيء بصورة أخرى، وغالبًا ما يفصل بين الصورتين أداة تشبيه.',ex:'﴿مَثَلُ الَّذِينَ حُمِّلُوا التَّوْرَاةَ ثُمَّ لَمْ يَحْمِلُوهَا [2:كَ]مَثَلِ [1:الْحِمَارِ يَحْمِلُ أَسْفَارًا]﴾',p:['صورة المشبه: من حُمّلوا التوراة ولم يعملوا بها','الأداة: كمثل','صورة المشبه به: الحمار يحمل كتبًا'],q:'تصوّر ( المعنى ) بصورة ( المشبه به ) فتوضّحه وتقرّبه إلى الذهن في صورة حيّة.'},
+{n:'تمثيلي (دون أداة)',d:'انتبه: قد يأتي التشبيه التمثيلي دون أداة. فالأساس أن يكون صورةً بصورة أخرى.',ex:'[0:عالمٌ بلا عمل] [1:سحابٌ بلا مطر]',p:['صورة المشبه: عالم بلا عمل','صورة المشبه به: سحاب بلا مطر'],q:'تصوّر ( المعنى ) بصورة ( المشبه به ) فتوضّحه وتقرّبه إلى الذهن في صورة حيّة.'},
+{n:'تشبيه ضمني',d:'نستطيع أن نقسمه إلى شقين: تشبيه، ودليل واقعي على هذا التشبيه. ولا يُصرَّح فيه بأركان التشبيه.',ex:'[0:مَن يَهُنْ يَسْهُلِ الهَوانُ عليهِ] [1:ما لِجُرحٍ بِمَيْتٍ إيلامُ]',p:['التشبيه: من اعتاد الهوان لا يتألم منه','الدليل الواقعي: الميت لا يتألم بجرحه'],q:'توضّح ( المعنى ) وتؤكده بتقديم الدليل الواقعي على صحته.'}]},
+{k:'tabs',t:'الاستعارة: ما يماثل التشبيه',intro:'الاستعارة تشبيه حُذف أحد طرفيه، وأُتي بشيء من لوازمه.',tabs:[
+{n:'استعارة مكنية',d:'حذف المشبه به والإتيان بلازمة من لوازمه.',ex:'وإذا المَنِيَّةُ [1:أنشبتْ أظفارَها] ألفيتَ كلَّ تميمةٍ لا تنفعُ',p:['المشبه: المنية (الموت)','المشبه به المحذوف: الوحش المفترس','لازمته: أنشبت أظفارها'],q:'تصوّر ( المشبه ) شيئًا محسوسًا / إنسانًا فتبرز ( المعنى ) بأجمل صورة.'},
+{n:'استعارة تصريحية',d:'حذف المشبه وذكر المشبه به (التصريح به) والإتيان بلازمة من لوازمه.',ex:'رأيتُ [1:أسدًا] يخطبُ على المنبرِ',p:['المشبه المحذوف: الرجل الشجاع','المشبه به المذكور: أسدًا','القرينة: يخطب على المنبر'],q:'توضّح ( معنى الاستعارة ) وتؤكده مبالغةً بأجمل صورة.'}]},
+{k:'tabs',t:'الكناية',intro:'لفظ أُريد به لازم معناه، مع جواز إرادة المعنى الأصلي.',tabs:[
+{n:'كناية عن صفة',d:'يُذكر فيها الموصوف ويُراد صفة لازمة له.',ex:'فلانٌ [1:كثيرُ الرَّمادِ]',p:['المعنى القريب: كثرة الرماد','المقصود (الصفة): الكرم'],q:'تأتي بـ( معنى الكناية ) مصحوبًا بدليله في إيجاز.'},
+{n:'كناية عن موصوف',d:'تُذكر فيها الصفة ويُراد الموصوف.',ex:'زرتُ [1:مدينةَ الألفِ مئذنةٍ]',p:['الصفة المذكورة: الألف مئذنة','الموصوف المقصود: القاهرة'],q:'تأتي بـ( معنى الكناية ) مصحوبًا بدليله في إيجاز.'}]},
+{k:'tabs',t:'البديع (١): السجع والجناس',tabs:[
+{n:'السجع',d:'هو توافق الفاصلتين (أواخر الجمل) في الحرف الأخير.',ex:'الحرُّ إذا وعدَ [1:وفى]، وإذا أعانَ [1:كفى]',p:['الفاصلتان: وفى / كفى'],q:'جرس موسيقي يطرب الإذن ويثبّت ( المعنى ) في النفس.'},
+{n:'جناس تام',d:'اتفاق اللفظين في نوع الحروف وعددها وترتيبها وحركاتها، واختلافهما في المعنى.',ex:'﴿وَيَوْمَ تَقُومُ [0:السَّاعَةُ] يُقْسِمُ الْمُجْرِمُونَ مَا لَبِثُوا غَيْرَ [1:سَاعَةٍ]﴾',p:['الساعة: القيامة','ساعة: ستون دقيقة'],q:'جرس موسيقي يطرب الإذن ويجذب الانتباه إلى ( المعنى ).'},
+{n:'جناس ناقص',d:'اختلاف اللفظين في واحد من: نوع الحروف أو عددها أو ترتيبها أو حركاتها.',ex:'اللهمَّ كما حسّنتَ [0:خَلْقي] فحسِّنْ [1:خُلُقي]',p:['خَلْق: الصورة','خُلُق: الطبع'],q:'جرس موسيقي يطرب الإذن ويجذب الانتباه إلى ( المعنى ).'}]},
+{k:'tabs',t:'البديع (٢): المقابلة والطباق',tabs:[
+{n:'المقابلة',d:'الإتيان بمعنيين متوافقين أو أكثر، ثم بما يقابل ذلك على الترتيب.',ex:'﴿فَلْيَضْحَكُوا [0:قَلِيلًا] وَلْيَبْكُوا [1:كَثِيرًا]﴾',p:['يضحكوا ↔ يبكوا','قليلًا ↔ كثيرًا'],q:'توضّح ( المعنى ) وتؤكده بالتضاد المرتّب.'},
+{n:'طباق إيجاب',d:'الجمع بين الشيء وضده، دون اختلاف في الإثبات والنفي.',ex:'﴿وَتَحْسَبُهُمْ [0:أَيْقَاظًا] وَهُمْ [1:رُقُودٌ]﴾',p:['أيقاظًا ↔ رقود'],q:'توضّح ( المعنى ) وتؤكده بالتضاد.'},
+{n:'طباق سلب',d:'الجمع بين فعلين من مصدر واحد: أحدهما مثبت والآخر منفي (أو أمر ونهي).',ex:'﴿هَلْ يَسْتَوِي الَّذِينَ [0:يَعْلَمُونَ] وَالَّذِينَ [1:لَا يَعْلَمُونَ]﴾',p:['يعلمون ↔ لا يعلمون'],q:'توضّح ( المعنى ) وتؤكده بالتضاد.'}]},
+{k:'quiz'},
+{k:'end'}
+];
+const D=document.getElementById('deck');let cur=0;
+const Q=[['«عليٌّ أسدٌ» نوع التشبيه فيه:',['تام','ناقص','بليغ','ضمني'],2],['«إذا المنية أنشبت أظفارها» استعارة:',['مكنية','تصريحية','تمثيلية','كناية'],0],['«فلان كثير الرماد» كناية عن:',['موصوف','صفة (الكرم)','نسبة','استعارة'],1],['﴿فليضحكوا قليلًا وليبكوا كثيرًا﴾ فيه:',['جناس','سجع','مقابلة','تشبيه بليغ'],2],['«ويوم تقوم الساعة… ما لبثوا غير ساعة»:',['جناس تام','جناس ناقص','طباق','سجع'],0]];
+function build(s,i){
+ const e=document.createElement('section');e.className='sl';let h='';
+ if(s.k=='title')h=`<div class="c ctr"><h1 class="big">البلاغة</h1><p class="l" style="font-size:clamp(1.4rem,3vw,2.2rem)">علما البيان والبديع · الصف الثاني عشر</p><div class="who">عمل الطالب: <b>يوسف عماد تقوائي</b><br>الصف: <b>١٢ع٥</b></div><p class="note">استخدم الأسهم ⟵ ⟶ للتنقل</p></div>`;
+ if(s.k=='cards')h=`<div class="c"><h2>${s.t}</h2><p class="l">${s.p}</p><div class="grid">${s.c.map(c=>`<div class="card" tabindex=0><h3>${c[0]}</h3><div>${c[1]}</div></div>`).join('')}</div><p class="note">${s.n}</p></div>`;
+ if(s.k=='map')h=`<div class="c"><h2>خريطة الدرس</h2><p class="l">البلاغة ثلاثة علوم: المعاني والبيان والبديع. موضوعنا اليوم: البيان والبديع. اضغط على أي موضوع للانتقال إليه.</p><div class="map"><div><h3>علم البيان</h3>${[['التشبيه',5],['الاستعارة',7],['الكناية',8]].map(a=>`<span class="pill" data-go="${a[1]}">${a[0]}</span>`).join('')}</div><div><h3>علم البديع</h3>${[['السجع',9],['الجناس',9],['الطباق',10],['المقابلة',10]].map(a=>`<span class="pill" data-go="${a[1]}">${a[0]}</span>`).join('')}</div></div></div>`;
+ if(s.k=='arkan')h=`<div class="c"><h2>التشبيه وأركانه</h2><p class="l">التشبيه: بيان اشتراك شيء مع غيره في صفة أو أكثر.</p><p class="l">وله أركان لا يكون تامًا إلا بها. ووجه الشبه يجب أن يكون صفة، وهذه الصفة تصف المشبه به أكثر من المشبه.</p><div class="pane"><div class="ex">${M('[0:عليٌّ] [2:كَ][1:الأسدِ] في [3:الشجاعةِ]')}</div><div class="chips">${['المشبه','المشبه به','أداة التشبيه','وجه الشبه'].map((c,j)=>`<span class="chip" data-k="${j}">${c}</span>`).join('')}</div><p class="note" style="color:var(--dk)">المشبه والمشبه به يسمّيان طرفي التشبيه. اضغط على الركن لتراه في المثال.</p></div></div>`;
+ if(s.k=='tabs')h=`<div class="c"><h2>${s.t}</h2>${s.intro?`<p class="l">${s.intro}</p>`:''}<div class="tabs">${s.tabs.map((t,j)=>`<button class="tab${j?'':' on'}" data-t="${j}">${t.n}</button>`).join('')}</div><div class="pane"></div></div>`;
+ if(s.k=='quiz')h=`<div class="c"><h2>اختبر نفسك</h2><div id="qz"></div></div>`;
+ if(s.k=='end')h=`<div class="c ctr"><h1 style="font-size:clamp(2.5rem,7vw,5rem)">شكرًا لحسن استماعكم</h1><p class="l">والحمد لله رب العالمين</p><div class="who">عمل الطالب: <b>يوسف عماد تقوائي</b><br>الصف: <b>١٢ع٥</b></div></div>`;
+ e.innerHTML=h;D.appendChild(e);
+ if(s.k=='tabs'){const pane=e.querySelector('.pane');const show=j=>{const t=s.tabs[j];pane.style.animation='none';pane.offsetWidth;pane.style.animation='';pane.innerHTML=`<div class="d">${t.d}</div><div class="ex">${M(t.ex)}</div><div class="chips">${t.p.map((c,x)=>`<span class="chip" data-k="${x}">${c}</span>`).join('')}</div><div class="q"><i>قالب الأثر:</i> ${t.q.replace(/\(([^)]*)\)/g,'<u>( $1 )</u>')}</div>`;e.querySelectorAll('.tab').forEach((b,x)=>b.classList.toggle('on',x==j))};e.querySelectorAll('.tab').forEach(b=>b.onclick=()=>show(+b.dataset.t));show(0)}
+ if(s.k=='quiz'){let q=0,sc=0;const z=e.querySelector('#qz');const r=()=>{if(q>=Q.length){z.innerHTML=`<p class="l">نتيجتك: <b style="color:var(--gold)">${sc} من ${Q.length}</b> ${sc==Q.length?'🎉 ممتاز!':'حاول مرة أخرى'}</p><button class="nb">إعادة الاختبار</button>`;z.querySelector('.nb').onclick=()=>{q=0;sc=0;r()};return}const a=Q[q];z.innerHTML=`<p class="l">${q+1}/${Q.length}: ${a[0]}</p>${a[1].map((o,j)=>`<button class="opt" data-j="${j}">${o}</button>`).join('')}`;z.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(z.dataset.l)return;z.dataset.l=1;const j=+b.dataset.j;if(j==a[2])sc++;b.classList.add(j==a[2]?'ok':'no');z.querySelectorAll('.opt')[a[2]].classList.add('ok');setTimeout(()=>{z.dataset.l='';q++;r()},1300)})};r()}
+ return e}
+const el=S.map(build);
+D.addEventListener('click',e=>{
+ const c=e.target.closest('.card');if(c){const g=c.parentNode;if(c.classList.contains('open')){g.querySelectorAll('.card').forEach(x=>x.classList.remove('open','dim'))}else{g.querySelectorAll('.card').forEach(x=>{x.classList.remove('open');x.classList.add('dim')});c.classList.remove('dim');c.classList.add('open')}return}
+ const p=e.target.closest('.pill');if(p)return go(+p.dataset.go);
+ const h=e.target.closest('.chip');if(h){const pn=h.closest('.pane');const on=!h.classList.contains('hl');pn.querySelectorAll('.hl').forEach(x=>x.classList.remove('hl'));if(on){pn.querySelectorAll(`[data-k="${h.dataset.k}"]`).forEach(x=>x.classList.add('hl'))}}
+});
+D.addEventListener('keydown',e=>{if(e.key=='Enter'&&e.target.classList.contains('card'))e.target.click()});
+// card reveal text initially hidden for 'cards' with extra detail: show hidden text on open
+document.querySelectorAll('.card>div').forEach(d=>d.classList.add('hid'));
+function go(n){cur=Math.max(0,Math.min(S.length-1,n));el.forEach((e,i)=>{e.classList.toggle('on',i==cur);e.classList.toggle('past',i<cur)});document.querySelector('#prog i').style.width=((cur+1)/S.length*100)+'%';document.getElementById('cnt').textContent=(cur+1)+' / '+S.length;el[cur].scrollTop=0}
+nx.onclick=()=>go(cur+1);pv.onclick=()=>go(cur-1);
+fs.onclick=()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();
+addEventListener('keydown',e=>{if(e.key=='ArrowLeft'||e.key==' ')go(cur+1);if(e.key=='ArrowRight')go(cur-1);if(e.key=='Home')go(0);if(e.key=='End')go(S.length-1);if(e.key=='f')fs.click()});
+let sx=0;addEventListener('touchstart',e=>sx=e.touches[0].clientX);addEventListener('touchend',e=>{const d=e.changedTouches[0].clientX-sx;if(Math.abs(d)>70)go(cur+(d>0?-1:1))});
+go(0);
+</script>
+</body>
+</html>
